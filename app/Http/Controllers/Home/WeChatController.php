@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Libs\api\driver\QqAi;
 use App\Models\WxKeyword;
-use EasyWeChat\Factory;
 use App\Http\Traits\TraitUpload;
-use App\Libs\Tuling;
 use EasyWeChat\Kernel\Messages\Image;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Log;
 
 class WeChatController extends Controller
 {
@@ -40,7 +37,7 @@ class WeChatController extends Controller
                     switch ($message['Event']) {
                         case 'subscribe':
                             # code...
-                            $res = Tuling::handle()->param('你好啊')->answer();
+                            $res = QqAi::handle()->param('你好啊')->answer();
                             return $res['content'];
                             break;
                         case 'unsubscribe':
@@ -69,7 +66,7 @@ class WeChatController extends Controller
                     if ($keyword) {
                         return $keyword->key_value;
                     }
-                    $res = Tuling::handle()->param($message['Content'])->answer();
+                    $res = QqAi::handle()->param($message['Content'])->answer();
                     switch ($res['resultType']) {
                         case 'text':
                             //Log::info('返回内容:' . $res['content']);
@@ -89,7 +86,7 @@ class WeChatController extends Controller
                 case 'image':
                     # 图片消息...
                     //图灵返回的图片结果
-                    $res = Tuling::handle()->param($message->PicUrl, 1)->answer();
+                    $res = QqAi::handle()->param($message->PicUrl, 1)->answer();
                     if ($res['resultType'] == 'image') {
                         //上传文件并返回路径
                         $result = self::imageUpload($res['content']);
