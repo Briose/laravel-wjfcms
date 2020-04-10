@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Home;
 
-use App\Libs\Tuling;
+use App\Libs\api\driver\QqAi;
+use App\Libs\api\driver\Tuling;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Tag;
@@ -84,7 +85,8 @@ class ToolsController extends Controller
      */
     public function tuling()
     {
-        $res = Tuling::handle()->param('德玛西亚')->answer();
+        //$res = Tuling::handle()->param('https://www.choudalao.com/images/config/avatar.jpg')->answer();
+        $res = QqAi::handle()->param('https://www.choudalao.com/images/config/avatar.jpg')->answer();
         return response()->json($res);
     }
 

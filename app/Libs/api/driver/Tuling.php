@@ -1,57 +1,47 @@
 <?php
 /**
  * Description:
- * Created by PhpStorm.
- * User: Vijay
- * Date: 2019/11/24
- * Time: 19:21
+ * User: Vijay <1937832819@qq.com>
+ * Date: 2020/04/10
+ * Time: 14:02
  */
 
-namespace App\Libs;
+namespace App\Libs\api\driver;
 
-
+use App\Libs\api\Driver;
 use Vijay\Curl\Curl;
 
-class Tuling
+class Tuling extends Driver
 {
-    //官方文档
-    //http://doc.tuling123.com/openapi2/263611
-    protected $param = [];
-    /**
-     * 实例
-     * @var null
-     */
-    protected static $handle = null;
-    /**
-     * 错误信息
-     * @var string
-     */
-    protected $error = '';
-
-    /**
-     * @var null
-     */
-    private $api_key = null;
-
-    /**
-     * @var null
-     */
-    private $app_url = null;
-
 
     /**
      * Tuling constructor.
      */
     public function __construct()
     {
+        $this->init();
+    }
+
+    /**
+     * Description:
+     * User: Vijay <1937832819@qq.com>
+     * Date: 2020/04/10
+     * Time: 14:26
+     * @return mixed|void
+     */
+    public function init()
+    {
+        // TODO: Implement init() method.
         $this->api_key = env('TULING_API_KEY');
         $this->app_url = env('TULING_API_URL');
     }
 
-
     /**
-     * 获取操作句柄
-     * @return null|Tuling
+     * Description:
+     * User: Vijay <1937832819@qq.com>
+     * Date: 2020/04/10
+     * Time: 14:04
+     * @return mixed|void
      */
     public static function handle()
     {
@@ -62,11 +52,13 @@ class Tuling
     }
 
     /**
-     * 设置参数
-     * Author: vijay <1937832819@qq.com>
-     * @param null $str 回复内容
-     * @param int $reqType 0为文本 1为图片
-     * @param int $uid 用户id
+     * Description:设置参数
+     * User: Vijay <1937832819@qq.com>
+     * Date: 2020/04/10
+     * Time: 14:13
+     * @param null $str
+     * @param int $reqType
+     * @param int $uid
      * @return $this|bool
      */
     public function param($str = null, $reqType = 0, $uid = 12345)
@@ -102,9 +94,9 @@ class Tuling
             return false;
         }
         $this->param = [
-            'reqType' => $reqType,
+            'reqType'    => $reqType,
             'perception' => $perception,
-            'userInfo' => [
+            'userInfo'   => [
                 'userId' => $uid,
                 'apiKey' => $this->api_key
             ]
@@ -113,54 +105,22 @@ class Tuling
     }
 
     /**
-     * 获取最后一次上传错误信息
-     * @return string
-     */
-    public function getError()
-    {
-        return $this->error;
-    }
-
-    /**
-     * 设置错误
-     * @param $error
-     * @return $this
-     */
-    protected function setError($error)
-    {
-        $this->error = $error;
-        return $this;
-    }
-
-    /**
-     * 回复内容
-     * @return string
-     */
-    public function reply()
-    {
-        $curl = new Curl();
-        $data = $curl->post($this->app_url, json_encode($this->param));
-        if ($data) {
-            return json_decode($data, true);
-        } else {
-            $this->setError('获取失败');
-            return '亲，换个方式问我吧';
-        }
-    }
-
-    /**
-     *通用接口
-     * @return array
+     * Description:
+     * User: Vijay <1937832819@qq.com>
+     * Date: 2020/04/10
+     * Time: 14:12
+     * @return array|mixed
      */
     public function answer()
     {
+        // TODO: Implement answer() method.
         $curl = new Curl();
         $data = $curl->post($this->app_url, json_encode($this->param));
         if (!isset($data) || empty($data)) {
             $this->setError('获取失败');
             $res = [
                 'resultType' => 'text',
-                'content' => '亲，换个方式问我吧'
+                'content'    => '亲，换个方式问我吧'
             ];
             return $res;
         }
@@ -169,7 +129,7 @@ class Tuling
         if (!isset($data['results'])) {
             $res = [
                 'resultType' => 'text',
-                'content' => '亲，换个方式问我吧'
+                'content'    => '亲，换个方式问我吧'
             ];
             return $res;
         }
@@ -182,28 +142,29 @@ class Tuling
                 }
                 $res = [
                     'resultType' => 'text',
-                    'content' => $text
+                    'content'    => $text
                 ];
                 break;
             case'image':
                 $res = [
                     'resultType' => 'image',
-                    'content' => $data['results'][0]['values']['image']
+                    'content'    => $data['results'][0]['values']['image']
                 ];
                 break;
             case'url':
                 $res = [
                     'resultType' => 'text',
-                    'content' => $data['results'][0]['values']['url']
+                    'content'    => $data['results'][0]['values']['url']
                 ];
                 break;
             default:
                 $res = [
                     'resultType' => 'text',
-                    'content' => '亲，换个方式问我吧'
+                    'content'    => '亲，换个方式问我吧'
                 ];
                 break;
         }
         return $res;
     }
+
 }
