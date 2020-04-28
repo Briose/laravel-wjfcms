@@ -37,6 +37,13 @@ class ArticleController extends BaijiahaoBase
         if (!$article) {
             return $this->resJson(1, '没有该条记录');
         }
+        if ($article->status == 0) {
+            return $this->resJson(1, '文章未审核通过');
+        }
+
+        if ($article->is_baijiahao == 1) {
+            return $this->resJson(1, '文章已推送过了');
+        }
 
         $url      = 'http://baijiahao.baidu.com/builderinner/open/resource/article/publish';
         $pushData = [
@@ -59,6 +66,7 @@ class ArticleController extends BaijiahaoBase
             return $this->resJson(1, '请求失败');
         }
         if ($resArr['errno'] == 0 && isset($resArr['data'])) {
+
             return $this->resJson(0, $resArr['errmsg']);
         } else {
             return $this->resJson(1, $resArr['errmsg']);
