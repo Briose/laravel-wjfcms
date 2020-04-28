@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class BaiduController extends Controller
 {
@@ -35,11 +36,15 @@ class BaiduController extends Controller
      * Date: 2020/04/28
      * Time: 12:46
      */
-    public function serve()
+    public function serve(Request $request)
     {
-        $strSignature = $this->getSHA1($this->config['you_token'], $_POST['timestamp'], $_POST['nonce']);
-        if ($strSignature == $_POST['signature']) {
-            echo $_POST['encrypt'];
+        $timestamp    = $request->input('timestamp');
+        $nonce        = $request->input('nonce');
+        $signature    = $request->input('signature');
+        $encrypt      = $request->input('encrypt');
+        $strSignature = $this->getSHA1($this->config['you_token'], $timestamp, $nonce);
+        if ($strSignature == $signature) {
+            echo $encrypt;
         } else {
             //校验失败
             echo 'failed';
