@@ -9,6 +9,8 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Libs\Encrypt\AesEncrypt;
+use App\Models\Article;
 use Illuminate\Http\Request;
 
 class BaiduController extends Controller
@@ -30,6 +32,25 @@ class BaiduController extends Controller
         $this->getConfig();
     }
 
+    public function index()
+    {
+        //数据解密
+        $appId   = 'your appId';
+        $aes_key = 'your aesKey';
+
+        $dataCoder = new AesEncrypt($appId, $aes_key);
+        //百家号服务器发送的消息
+
+
+        $data = [
+            'signature' => '',
+            'timestamp' => '',
+            'nonce'     => '',
+            'encrypt'   => '',
+        ];
+        print_r($dataCoder->decrypt($data['encrypt']));
+    }
+
     /**
      * Description:
      * User: Vijay <1937832819@qq.com>
@@ -43,12 +64,13 @@ class BaiduController extends Controller
         $signature    = $request->input('signature');
         $encrypt      = $request->input('encrypt');
         $strSignature = $this->getSHA1($this->config['you_token'], $timestamp, $nonce);
-        if ($strSignature == $signature) {
-            echo $encrypt;
-        } else {
-            //校验失败
+        if ($strSignature !== $signature) {
             echo 'failed';
+            return false;
+
         }
+        $dataCoder = new AesEncrypt($this->config['app_id'], $this->config['encoding_AESKey']);
+        print_r($dataCoder->decrypt($encrypt));
     }
 
     /**

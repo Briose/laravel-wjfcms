@@ -91,6 +91,13 @@
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">
                         <i class="layui-icon layui-icon-delete"></i>删除
                     </a>
+                    @{{#  if(d.status == 1 && d.is_baijiahao == 0){ }}
+                    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="baijiahao_publish">
+                        <i class="layui-icon layui-icon-top"></i>推送到百家号</a>
+                    @{{#  } else { }}
+                    <a class="layui-btn layui-btn-disabled layui-btn-xs">
+                        <i class="layui-icon layui-icon-top"></i>推送到百家号</a>
+                    @{{#  } }}
                     @{{#  } else { }}
                     <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="restore">
                         <i class="layui-icon layui-icon-refresh-3"></i>恢复数据</a>
@@ -118,6 +125,25 @@
                 , admin = layui.admin
                 , form = layui.form;
             var category_id = getQueryVariable('category_id');
+
+            //将以下代码粘入相关页面中
+            $(document).off('mousedown','.layui-table-grid-down').
+            on('mousedown','.layui-table-grid-down',function (event) {
+                table._tableTrCurrr = $(this).closest('td');
+            });
+            $(document).off('click','.layui-table-tips-main [lay-event]').
+            on('click','.layui-table-tips-main [lay-event]',function (event) {
+                var elem = $(this);
+                var tableTrCurrr =  table._tableTrCurrr;
+                if(!tableTrCurrr){
+                    return;
+                }
+                var layerIndex = elem.closest('.layui-table-tips').attr('times');
+                console.log(layerIndex);
+                layer.close(layerIndex);
+                table._tableTrCurrr.find('[lay-event="' + elem.attr('lay-event') +           '"]').children("i").first().click();
+            });
+
             //表格数据
             table.render({
                 elem: '#LAY-app-list'
@@ -266,29 +292,29 @@
                             //监听提交
                             iframeWindow.layui.form.on('submit(layuiadmin-app-form-edit)', function (data) {
                                 var field = data.field; //获取提交的字段
-                                if(!field.title){
+                                if (!field.title) {
                                     layer.msg('"标题"不能为空', {icon: 2});
                                     return false;
                                 }
-                                if(!field.category_id){
+                                if (!field.category_id) {
                                     layer.msg('请选择分类', {icon: 2});
                                     return false;
                                 }
-                                if(!field.author){
+                                if (!field.author) {
                                     layer.msg('作者不能为空', {icon: 2});
                                     return false;
                                 }
-                                if(!field.description){
+                                if (!field.description) {
                                     layer.msg('描述不能为空', {icon: 2});
                                     return false;
                                 }
                                 var code_html = 'editor-html-code';
-                                if(!field[code_html]){
+                                if (!field[code_html]) {
                                     layer.msg('内容不能为空', {icon: 2});
                                     return false;
                                 }
                                 var doc_html = 'editor-html-doc';
-                                if(!field[doc_html]){
+                                if (!field[doc_html]) {
                                     layer.msg('内容不能为空', {icon: 2});
                                     return false;
                                 }
@@ -382,6 +408,35 @@
                             }
                         });
                     });
+                } else if (obj.event === 'baijiahao_publish') {
+                    layer.confirm('确定要推送到百家号吗?', function (index) {
+                        admin.req({
+                            url: '/admin/baijiahao/article/publish'
+                            , data: {id: obj.data.id}
+                            , method: 'POST'
+                            , headers: {
+                                'X-CSRF-TOKEN': csrf_token
+                            }
+                            , beforeSend: function (XMLHttpRequest) {
+                                layer.load();
+                            }
+                            , done: function (res) {
+                                layer.closeAll('loading');
+                                if (res.code === 0) {
+                                    layer.msg(res.msg, {
+                                        offset: '15px'
+                                        , icon: 1
+                                        , time: 1000
+                                    }, function () {
+                                        obj.del();
+                                        layer.close(index);
+                                    });
+                                } else {
+                                    layer.msg(res.msg, {icon: 2});
+                                }
+                            }
+                        });
+                    });
                 }
             });
 
@@ -444,29 +499,29 @@
                                 if (!field.cover) {
                                     field.cover = window.location.protocol + "//" + window.location.host + '/images/config/default-img.jpg';
                                 }
-                                if(!field.title){
+                                if (!field.title) {
                                     layer.msg('"标题"不能为空', {icon: 2});
                                     return false;
                                 }
-                                if(!field.category_id){
-                                   layer.msg('请选择分类', {icon: 2});
+                                if (!field.category_id) {
+                                    layer.msg('请选择分类', {icon: 2});
                                     return false;
                                 }
-                                if(!field.author){
+                                if (!field.author) {
                                     layer.msg('作者不能为空', {icon: 2});
                                     return false;
                                 }
-                                if(!field.description){
+                                if (!field.description) {
                                     layer.msg('描述不能为空', {icon: 2});
                                     return false;
                                 }
                                 var code_html = 'editor-html-code';
-                                if(!field[code_html]){
+                                if (!field[code_html]) {
                                     layer.msg('内容不能为空', {icon: 2});
                                     return false;
                                 }
                                 var doc_html = 'editor-html-doc';
-                                if(!field[doc_html]){
+                                if (!field[doc_html]) {
                                     layer.msg('内容不能为空', {icon: 2});
                                     return false;
                                 }

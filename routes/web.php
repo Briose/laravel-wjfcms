@@ -372,15 +372,23 @@ Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function 
         Route::post('forceDelete', 'FriendLinksController@forceDelete');
     });
 
+    //百家号
+    Route::prefix('baijiahao')->group(function () {
+        // 文章操作
+        Route::prefix('article')->group(function () {
+            Route::any('publish', 'Baijiahao\ArticleController@publish');
+        });
+    });
+
     // 微信
     Route::prefix('weChat')->group(function () {
         // 关键字操作
         Route::prefix('keyword')->group(function () {
-            Route::any('index', 'Wechat\KeywordController@Index');
-            Route::get('create', 'Wechat\KeywordController@Create');
-            Route::post('store', 'Wechat\KeywordController@Store');
-            Route::get('show/{id}', 'Wechat\KeywordController@Show');
-            Route::get('edit/{id}', 'Wechat\KeywordController@Edit');
+            Route::any('index', 'Wechat\KeywordController@index');
+            Route::get('create', 'Wechat\KeywordController@create');
+            Route::post('store', 'Wechat\KeywordController@store');
+            Route::get('show/{id}', 'Wechat\KeywordController@show');
+            Route::get('edit/{id}', 'Wechat\KeywordController@edit');
             Route::post('update', 'Wechat\KeywordController@Update');
             Route::post('destroy', 'Wechat\KeywordController@destroy');
         });
