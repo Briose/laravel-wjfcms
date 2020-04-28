@@ -66,7 +66,8 @@ class ArticleController extends BaijiahaoBase
             return $this->resJson(1, '请求失败');
         }
         if ($resArr['errno'] == 0 && isset($resArr['data'])) {
-
+            $article->is_baijiahao = 1;
+            $article->save();
             return $this->resJson(0, $resArr['errmsg']);
         } else {
             return $this->resJson(1, $resArr['errmsg']);
