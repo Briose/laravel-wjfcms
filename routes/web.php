@@ -91,6 +91,10 @@ Route::namespace('Home')->group(function () {
     Route::prefix('wechat')->group(function () {
         Route::any('/', 'WeChatController@serve');
     });
+    //百度
+    Route::prefix('baidu')->group(function () {
+        Route::any('serve', 'BaiduController@serve');
+    });
 });
 
 // 后台登录页面
