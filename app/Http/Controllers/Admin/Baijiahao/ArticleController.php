@@ -57,7 +57,6 @@ class ArticleController extends BaijiahaoBase
             ], JSON_UNESCAPED_UNICODE),
             'is_original'  => $original,
         ];
-        dd($pushData);
         $curl     = new Curl();
         $res      = $curl->post($url, $pushData);
 
