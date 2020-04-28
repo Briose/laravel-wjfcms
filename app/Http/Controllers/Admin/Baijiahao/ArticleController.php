@@ -52,7 +52,7 @@ class ArticleController extends BaijiahaoBase
             'title'        => $article->title,
             'content'      => $article->content,
             'origin_url'   => self::BLOG_URL . '/article/' . $id,
-            'cover_images' => json_encode([$article->cover], JSON_UNESCAPED_UNICODE),
+            //'cover_images' => json_encode([$article->cover], JSON_UNESCAPED_UNICODE),
             'is_original'  => $original,
         ];
         $curl     = new Curl();
