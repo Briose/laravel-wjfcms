@@ -50,7 +50,7 @@ class ArticleController extends BaijiahaoBase
             'app_id'       => $this->config['app_id'],
             'app_token'    => $this->config['app_token'],
             'title'        => $article->title,
-            'content'      => $article->content,
+            'content'      => htmlspecialchars_decode($article->content),
             'origin_url'   => self::BLOG_URL . '/article/' . $id,
             'cover_images' => json_encode([
                 ['src' => $article->cover]
