@@ -237,7 +237,7 @@
                     , before: function (obj) {
                         //预读本地文件示例，不支持ie8
                         obj.preview(function (index, file, result) {
-                            $('#up_cover').attr('src', result); //图片链接（base64）
+                            //$('#up_cover').attr('src', result); //图片链接（base64）
                         });
                     }
                     , done: function (res) {
@@ -247,6 +247,7 @@
                         }
                         //上传成功
                         $('input[name="cover"]').val(res.data.src);
+                        $('#up_cover').attr('src', res.data.src); //图片链接（base64）
                     }
                     , error: function () {
                         //演示失败状态，并实现重传
