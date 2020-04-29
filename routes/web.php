@@ -18,6 +18,10 @@ Route::get('test', function () {
     pr(2);
 });
 
+Route::get('MP_verify_hy4A51K4J7dyrXRu.txt', function () {
+    return 'hy4A51K4J7dyrXRu';
+});
+
 //错误页
 Route::get('blank', 'Home\BlankController@index')->name('blank');
 
