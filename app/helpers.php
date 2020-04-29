@@ -110,7 +110,7 @@ function waterMarkImage($img, $isCover = false, $text = '', $color = '', $size =
     if ($extension !== 'gif') {
         $image = Image::make($img);
         if ($isCover) {
-            $image->resize(200, 200);
+            $image->resize(218, 218);
         }
         $image->text($text, $image->width() - 10, $image->height() - 10, function ($font) use ($color, $size) {
             $font->file(public_path('fonts/msyh.ttf'));
