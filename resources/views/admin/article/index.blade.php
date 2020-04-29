@@ -428,7 +428,7 @@
                                         , icon: 1
                                         , time: 1000
                                     }, function () {
-                                        obj.del();
+                                        table.reload('LAY-app-list');
                                         layer.close(index);
                                     });
                                 } else {
