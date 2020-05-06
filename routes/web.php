@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('test', function () {
-    pr(2);
+    $link = \App\Models\FriendLink::query()->find(4);
+    \App\Jobs\TestJob::dispatch($link);
 });
 
 //错误页
