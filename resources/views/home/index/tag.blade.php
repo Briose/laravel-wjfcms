@@ -45,6 +45,8 @@
         <div class="sidebar">
             @component('./layouts/home/search')
             @endcomponent
+            @component('./layouts/home/ad')
+            @endcomponent
             @component('./layouts/home/hot')
             @endcomponent
             @component('./layouts/home/tag')
