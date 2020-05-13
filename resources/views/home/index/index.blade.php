@@ -66,6 +66,8 @@
             @endcomponent
             @component('./layouts/home/search')
             @endcomponent
+            @component('./layouts/home/ad')
+            @endcomponent
             @component('./layouts/home/publicwx')
             @endcomponent
             @component('./layouts/home/links')
