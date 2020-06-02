@@ -4,7 +4,7 @@
 
  
 
-**laravel-wjfcms是基于laravel5.8及layui开发的后台管理系统。**
+**laravel-wjfcms是基于laravel及layui开发的后台管理系统。**
 
  
 
