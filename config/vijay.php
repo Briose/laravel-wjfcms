@@ -20,7 +20,7 @@ return [
     'wx' => 'wjf1937832819',
     'base_url' => 'https://www.choudalao.com',
     'base_name' => '臭大佬',
-    'motto' => 'laravel-wjfcms是基于laravel5.8及layui开发的后台管理系统。',
+    'motto' => 'laravel-wjfcms是基于laravel及layui开发的后台管理系统。',
     'github' => 'https://github.com/Galloping-Vijay/laravel-wjfcms',
     'document' => 'https://www.kancloud.cn/wjf19940211/laravel-wjfcms',
     'update_log' => 'https://www.kancloud.cn/wjf19940211/laravel-wjfcms/1132643',
