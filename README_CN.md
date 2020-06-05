@@ -8,13 +8,20 @@
 
 <a href="https://github.com/Galloping-Vijay/laravel-wjfcms/blob/master/README_EN.md">English readme</a>
 
+# 演示地址
+地址：http://demo.choudalao.com/admin
+
+账号：13000000000
+
+密码：123456
+
 # 安装文档
 
 https://www.choudalao.com/static/docs/_book/installation.html
 
 # 前言
 
-**laravel-wjfcms是基于laravel5.8及layui开发的后台管理系统。**
+**laravel-wjfcms是基于laravel及layui开发的后台管理系统。**
 
 laravel-wjfcms有如下特点：
 
