@@ -150,3 +150,9 @@ php artisan list
 
 更多操作请点击查看[Artisan 命令行](https://learnku.com/docs/laravel/5.8/artisan/3913)
 
+## 访问
+至此安装完成，后台地址为:域名/admin，如：http://dev.wjf.net/admin
+
+后台默认账号 :13000000000
+
+密码:123456
