@@ -33,7 +33,7 @@ git clone https://gitee.com/Galloping-Vijay/laravel-wjfcms.git
 ## 进入项目目录
 
 ~~~shell
-cd ./aravel-wjfcms
+cd ./laravel-wjfcms
 ~~~
 
 ![screenshot_1562922540161](./images/screenshot_1562922540161.png)
