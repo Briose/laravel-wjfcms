@@ -26,7 +26,7 @@ class NavsTableSeeder extends Seeder
             [
                 'name' => '文档',
                 'sort' => 1,
-                'url' => 'https://www.kancloud.cn/wjf19940211/laravel-wjfcms/1132641',
+                'url' => 'https://www.choudalao.com/static/docs/_book/installation.html',
                 'pid' => 0,
                 'target' => '_blank',
                 'created_at' => date('Y-m-d H:i:s'),
