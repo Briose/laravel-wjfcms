@@ -36,9 +36,12 @@ class WeChatController extends Controller
                     # 事件消息...
                     switch ($message['Event']) {
                         case 'subscribe':
-                            # code...
-                            $res = QqAi::handle()->param('你好啊')->answer();
-                            return $res['content'];
+                            //查询数据库是否存在关键词
+                            $keyword = WxKeyword::query()->where('status', '=', 1)->where('key_name', 'like', '%关注%')->first();
+                            if ($keyword) {
+                                return $keyword->key_value;
+                            }
+                            return '我是一个有爆料、有态度、有内涵、有技术的公众号。感谢关注！不妨试试跟我聊天，回复关键词可解锁技能哦。';
                             break;
                         case 'unsubscribe':
                             # code...
