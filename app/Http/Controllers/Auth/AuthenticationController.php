@@ -40,7 +40,7 @@ class AuthenticationController extends Controller
      */
     public function getSocialCallback($account)
     {
-        $socialUser = Socialite::with($account)->user();
+        $socialUser = Socialite::with($account)->stateless()->user();
         //获取名称
         $name = $socialUser->getName() == '' ? $socialUser->getNickname() : $socialUser->getName();
         $email = $socialUser->getEmail() == '' ? '' : $socialUser->getEmail();
