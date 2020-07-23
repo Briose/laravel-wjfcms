@@ -107,8 +107,6 @@
             @endcomponent
             @component('./layouts/home/publicwx')
             @endcomponent
-            @component('./layouts/home/applets')
-            @endcomponent
         </div>
     </article>
 @endsection
