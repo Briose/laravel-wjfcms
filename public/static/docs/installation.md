@@ -12,6 +12,12 @@ github地址：[laravel-wjfcms](https://github.com/Galloping-Vijay/laravel-wjfcm
 git clone https://github.com/Galloping-Vijay/laravel-wjfcms
 ~~~
 
+> 如果github访问慢,可以换码云链接 
+
+~~~shell
+git clone https://gitee.com/Galloping-Vijay/laravel-wjfcms.git
+~~~
+
 win下
 
 ![screenshot_1562922175293](./images/screenshot_1562922175293.png)
@@ -19,16 +25,6 @@ win下
 ubuntu下(注意权限)
 
 ![screenshot_1565618633020](./images/screenshot_1565618633020.png)
-
-
-
-> 如果github访问慢,可以换码云链接 
-
-~~~shell
-git clone https://gitee.com/Galloping-Vijay/laravel-wjfcms.git
-~~~
-
-
 
 ## 进入项目目录
 
