@@ -13,9 +13,7 @@ use App\Models\FriendLink;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Vijay\Curl\Curl;
 use App\Models\Nav;
@@ -34,10 +32,10 @@ class IndexController extends Controller
         //登录验证
         //$this->middleware('auth');
         //共享视图
-        $navList = Nav::getMenuTree(Nav::orderBy('sort', 'asc')->get()->toArray());
-        $categories = Category::getMenuTree(Category::orderBy('sort', 'asc')->select('id', 'name', 'pid')->get()->toArray());
+        $navList    = Nav::cacheNav();
+        $categories = Category::cacheCategory();
         View::share([
-            'nav_list' => $navList,
+            'nav_list'      => $navList,
             'category_list' => $categories,
         ]);
     }
@@ -52,15 +50,9 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
-        $keytitle = $request->input('keytitle', '');
-        $topArticle = Article::where([
-            ['is_top', '=', '1'],
-            ['status', '=', '1']
-        ])->select('id', 'title', 'cover')
-            ->orderBy('updated_at', 'desc')
-            ->limit(3)
-            ->get();
-        $where = [
+        $keytitle   = $request->input('keytitle', '');
+        $topArticle = Article::topArticle();
+        $where      = [
             ['status', '=', '1']
         ];
         if ($keytitle != '') {
@@ -72,7 +64,7 @@ class IndexController extends Controller
             ->paginate(15);
         return view('home.index.index', [
             'top_article' => $topArticle,
-            'articles' => $articles,
+            'articles'    => $articles,
         ]);
     }
 
@@ -99,14 +91,14 @@ class IndexController extends Controller
                 ->select('id', 'name')
                 ->get()->toArray();
         }
-        $pre = Article::select('id', 'title')->find($id - 1);
+        $pre  = Article::select('id', 'title')->find($id - 1);
         $next = Article::select('id', 'title')->find($id + 1);
         return view('home.index.article', [
             'is_article' => true,
-            'info' => $info,
-            'info_tags' => $infoTags,
-            'pre' => $pre,
-            'next' => $next
+            'info'       => $info,
+            'info_tags'  => $infoTags,
+            'pre'        => $pre,
+            'next'       => $next
         ]);
     }
 
@@ -120,7 +112,7 @@ class IndexController extends Controller
      */
     public function category(Category $category)
     {
-        $where = [
+        $where    = [
             ['status', '=', '1'],
             ['category_id', '=', $category->id]
         ];
@@ -128,7 +120,7 @@ class IndexController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(15);
         return view('home.index.category', [
-            'info' => $category,
+            'info'     => $category,
             'articles' => $articles,
         ]);
     }
@@ -143,16 +135,16 @@ class IndexController extends Controller
      */
     public function tag(Tag $tag)
     {
-        $where = [
+        $where    = [
             ['status', '=', '1'],
             ['keywords', 'like', '%' . $tag->name . '%']
         ];
         $articles = Article::where($where)
             ->orderBy('created_at', 'desc')
             ->paginate(9);
-        $count = count($articles);
-        $data = [];
-        $j = 0;
+        $count    = count($articles);
+        $data     = [];
+        $j        = 0;
         for ($i = 0; $i < $count; $i++) {
             if ($i % 3 == 0) {
                 $j++;
@@ -160,9 +152,9 @@ class IndexController extends Controller
             $data[$j][] = $articles[$i]->toArray();
         }
         return view('home.index.tag', [
-            'info' => $tag,
+            'info'     => $tag,
             'articles' => $articles,
-            'data' => $data
+            'data'     => $data
         ]);
     }
 
@@ -193,8 +185,8 @@ class IndexController extends Controller
     public function history(Request $request)
     {
         $curl = new Curl();
-        $url = 'http://www.jiahengfei.cn:33550/port/history?dispose=detail&key=jiahengfei&month=' . date('m') . '&day=' . date('d');
-        $res = $curl->get($url);
+        $url  = 'http://www.jiahengfei.cn:33550/port/history?dispose=detail&key=jiahengfei&month=' . date('m') . '&day=' . date('d');
+        $res  = $curl->get($url);
         return $res;
     }
 
@@ -279,10 +271,10 @@ class IndexController extends Controller
      */
     public function ajaxComment(Request $request)
     {
-        $article_id = $request->input('article_id');
+        $article_id    = $request->input('article_id');
         $comment_limit = $request->input('comment_limit', 2);
-        $comment_page = $request->input('comment_page', 1);
-        $art = Article::find($article_id);
+        $comment_page  = $request->input('comment_page', 1);
+        $art           = Article::find($article_id);
         if (!$art) {
             return $this->resJson('1', '不存在该文章', []);
         }
