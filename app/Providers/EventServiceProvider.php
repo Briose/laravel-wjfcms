@@ -2,8 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Article;
+use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Nav;
+use App\Observers\ArticleObserver;
+use App\Observers\CategoryObserver;
 use App\Observers\CommentObserver;
+use App\Observers\NavObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -16,7 +22,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Registered::class => [
+        Registered::class                                     => [
             SendEmailVerificationNotification::class,
         ],
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
@@ -34,7 +40,9 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
         //观察者监听模型事件
-        //Article::observe(ArticleObserver::class);
+        Article::observe(ArticleObserver::class);
         Comment::observe(CommentObserver::class);
+        Nav::observe(NavObserver::class);
+        Category::observe(CategoryObserver::class);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Http\Traits\TraitsModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
 {
@@ -62,5 +63,28 @@ class Category extends Model
             }
         }
         return $list;
+    }
+
+    /**
+     * Description:
+     * User: Vijay <1937832819@qq.com>
+     * Date: 2020/07/31
+     * Time: 12:47
+     * @param bool $isCache
+     * @return array|mixed
+     */
+    public static function cacheCategory($isCache = false)
+    {
+        if ($isCache == true) {
+            $category    = self::getMenuTree(self::query()->orderBy('sort', 'asc')->select('id', 'name', 'pid')->get()->toArray());
+            Cache::forever('cache_category', $category);
+            $category = Cache::get('cache_category');
+        } else {
+            $category = Cache::rememberForever('cache_category', function () {
+                $category    = self::getMenuTree(self::query()->orderBy('sort', 'asc')->select('id', 'name', 'pid')->get()->toArray());
+                return $category;
+            });
+        }
+        return $category;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Http\Traits\TraitsModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Nav extends Model
 {
@@ -66,9 +67,32 @@ class Nav extends Model
         foreach ($data as $key => &$val) {
             if ($val['pid'] == $pid) {
                 $val['child'] = self::getMenuTree($data, $val['id']);
-                $resArr[] = $val;
+                $resArr[]     = $val;
             }
         }
         return $resArr;
+    }
+
+    /**
+     * Description:
+     * User: Vijay <1937832819@qq.com>
+     * Date: 2020/07/31
+     * Time: 12:42
+     * @param bool $isCache
+     * @return array|mixed
+     */
+    public static function cacheNav($isCache = false)
+    {
+        if ($isCache == true) {
+            $navList    = self::getMenuTree(self::query()->orderBy('sort', 'asc')->get()->toArray());
+            Cache::forever('nav_list', $navList);
+            $navList = Cache::get('nav_list');
+        } else {
+            $navList = Cache::rememberForever('nav_list', function () {
+                $navList    = self::getMenuTree(self::query()->orderBy('sort', 'asc')->get()->toArray());
+                return $navList;
+            });
+        }
+        return $navList;
     }
 }
