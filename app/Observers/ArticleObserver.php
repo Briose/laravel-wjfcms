@@ -27,7 +27,9 @@ class ArticleObserver extends BaseObserver
      */
     public function created(Article $article)
     {
-        //
+        if ($article->is_top == 1 && $article->status == 1) {
+            Article::topArticle(true);
+        }
     }
 
     /**
@@ -50,7 +52,10 @@ class ArticleObserver extends BaseObserver
      */
     public function updated(Article $article)
     {
-
+        // 缓存置顶文章
+        if ($article->isDirty('is_top') || $article->isDirty('status')) {
+            Article::topArticle(true);
+        }
     }
 
     /**
