@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Http\Traits\TraitsModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Article extends Model
 {
@@ -48,5 +49,43 @@ class Article extends Model
     public function getMarkdownAttribute($value)
     {
         return $value ? $value : $this->content;
+    }
+
+    /**
+     * Description:缓存置顶文章
+     * User: Vijay <1937832819@qq.com>
+     * Date: 2020/07/31
+     * Time: 11:12
+     * @param bool $isCache
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|mixed
+     */
+    public static function topArticle($isCache = false)
+    {
+        if ($isCache == true) {
+            $topArticle = Article::query()
+                ->where([
+                    ['is_top', '=', '1'],
+                    ['status', '=', '1']
+                ])->select('id', 'title', 'cover')
+                ->orderBy('updated_at', 'desc')
+                ->limit(3)
+                ->get();
+
+            Cache::forever('top_article', $topArticle);
+            $topArticle = Cache::get('top_article');
+        } else {
+            $topArticle = Cache::rememberForever('top_article', function () {
+                $topArticle = Article::query()
+                    ->where([
+                        ['is_top', '=', '1'],
+                        ['status', '=', '1']
+                    ])->select('id', 'title', 'cover')
+                    ->orderBy('updated_at', 'desc')
+                    ->limit(3)
+                    ->get();
+                return $topArticle;
+            });
+        }
+        return $topArticle;
     }
 }
