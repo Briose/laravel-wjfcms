@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Comment;
+use Illuminate\Support\Facades\Mail;
 
 class CommentObserver
 {
@@ -14,6 +15,14 @@ class CommentObserver
      */
     public function created(Comment $comment)
     {
+        // 新评论邮箱提醒
+        $subject = env('MAIL_FROM_NAME');
+        $email =  env('MAIL_TO_ADDRESS');
+        $app_url = env('APP_URL');
+        $msg     = "【{$subject}】有新评论，<a href='{$app_url}/article/{$comment->article_id}' title='{$subject}' target='_blank'>点击查看</a>";
+        Mail::raw($msg, function ($message) use ($email, $subject) {
+            $message->to($email)->subject($subject);
+        });
     }
 
     /**
