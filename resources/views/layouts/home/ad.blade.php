@@ -1,11 +1,11 @@
 <div class="cloud" style="margin-top: 20px;">
     <h2 class="hometitle">广告栏</h2>
     <ul>
-        <div class="_r00fpxyysna"></div>
+        <div class="_jqxom5ik70q" style="margin: -20px;"></div>
         <script type="text/javascript">
             (window.slotbydup = window.slotbydup || []).push({
                 id: "u6209999",
-                container: "_r00fpxyysna",
+                container: "_jqxom5ik70q",
                 async: true
             });
         </script>
@@ -14,4 +14,3 @@
         </script>
     </ul>
 </div>
-
