@@ -39,7 +39,7 @@ Whether it is open or direct, you can easily develop modules as long as you have
 
 ###  Beautiful and elegant：
 
-The laravel-wjfcms background page is based on the single-page version of layui-admin. The view is beautiful and the documentation is rich. You don't have to worry about the page layout and JS anymore.
+The laravel-wjfcms background page is based on the single-page version of layui. The view is beautiful and the documentation is rich. You don't have to worry about the page layout and JS anymore.
 
 ### MVC layered mode
 
