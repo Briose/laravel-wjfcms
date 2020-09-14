@@ -86,4 +86,25 @@ class SystemConfig extends Model
         }
         return $val;
     }
+
+    /**
+     * Description:
+     * User: Vijay <1937832819@qq.com>
+     * Date: 2020/09/14
+     * Time: 10:52
+     * @param bool $isCache
+     * @return \Illuminate\Support\Collection|mixed
+     */
+    public static function getConfigList($isCache = true)
+    {
+        $key  = 'system_configs';
+        $data = Cache::get($key);
+        if ($isCache === false || !$data) {
+            $data = self::query()
+                ->where('status', 1)
+                ->pluck('value','key')->toArray();
+            Cache::put($key, $data);
+        }
+        return $data;
+    }
 }

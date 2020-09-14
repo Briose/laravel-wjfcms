@@ -61,4 +61,16 @@ class SystemConfigObserver
     {
         //
     }
+
+    /**
+     * Description:
+     * User: Vijay <1937832819@qq.com>
+     * Date: 2020/09/14
+     * Time: 10:56
+     * @param SystemConfig $systemConfig
+     */
+    public function saved(SystemConfig $systemConfig)
+    {
+        $systemConfig::getConfigList(false);
+    }
 }

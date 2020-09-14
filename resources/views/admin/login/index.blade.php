@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>登入 - laravel-wjfcms</title>
+    <title>登入 - {{ config('vijay.app_name') }}</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -17,8 +17,8 @@
 
     <div class="layadmin-user-login-main">
         <div class="layadmin-user-login-box layadmin-user-login-header">
-            <h2>laravel-wjfcms</h2>
-            <p>简单好用的后台管理系统</p>
+            <h2>{{ config('vijay.app_name') }}</h2>
+            <p>{{ config('vijay.app_Introduction') }}</p>
         </div>
         <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
             @csrf
@@ -58,11 +58,11 @@
     </div>
     <div class="layui-trans layadmin-user-login-footer">
 
-        <p>© 2017~2020 <a href="https://www.choudalao.com" target="_blank">厦门悦遇科技有限公司</a> 版权所有</p>
+        <p>© 2017~2020 <a href="https://www.choudalao.com" target="_blank">{{ config('vijay.company') }}</a> 版权所有</p>
         <p>
-            <span><a href="https://www.kancloud.cn/wjf19940211/laravel-wjfcms/1132641" target="_blank">开发文档</a></span>
-            <span><a href="https://www.choudalao.com" target="_blank">臭大佬首页</a></span>
-            <span><a href="https://github.com/Galloping-Vijay/laravel-wjfcms" target="_blank">Github</a></span>
+            <span><a href="{{ config('vijay.document') }}" target="_blank">开发文档</a></span>
+            <span><a href="{{ config('vijay.base_url') }}" target="_blank">臭大佬首页</a></span>
+            <span><a href="{{ config('vijay.github') }}" target="_blank">Github</a></span>
         </p>
     </div>
 </div>
@@ -85,7 +85,7 @@
         if (top != self) {
             top.location.href = '/admin/login';
         }
-        
+
         form.render();
 
         //提交

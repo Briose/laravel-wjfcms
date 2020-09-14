@@ -7,6 +7,8 @@
  */
 
 return [
+    'app_name' => 'laravel-wjfcms',
+    'app_Introduction' => '简单好用的后台管理系统',
     'object_name' => '臭大佬',
     'version' => 'v1.4.0',
     'branch' => env('DEPLOY_BRANCH', 'master'),

@@ -6,10 +6,12 @@ use App\Models\Article;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Nav;
+use App\Models\SystemConfig;
 use App\Observers\ArticleObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\CommentObserver;
 use App\Observers\NavObserver;
+use App\Observers\SystemConfigObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -44,5 +46,6 @@ class EventServiceProvider extends ServiceProvider
         Comment::observe(CommentObserver::class);
         Nav::observe(NavObserver::class);
         Category::observe(CategoryObserver::class);
+        SystemConfig::observe(SystemConfigObserver::class);
     }
 }
