@@ -60,6 +60,6 @@ BBuilt-in article system, including articles, categories, tags, comments, and mo
 
 If you like, welcome star and fork, thank you for your support!
 
-Manual address：https://www.kancloud.cn/wjf19940211/laravel-wjfcms/1132636
+Manual address：https://www.choudalao.com/static/docs/_book/insta
 
 Github：https://github.com/Galloping-Vijay/laravel-wjfcms
